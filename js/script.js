@@ -50,25 +50,32 @@
     return s.toUpperCase();
   }
 
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  }
+
   function renderReviews(list) {
     var grid = document.getElementById('reviewsGrid');
     if (!grid || !Array.isArray(list)) return;
     grid.innerHTML = list.map(function (r) {
       var hasText = r.tresc && r.tresc.trim().length;
       var text = hasText
-        ? '<p class="review-card__text">„' + r.tresc + '”</p>'
-        : '<p class="review-card__text review-card__text--empty">Klient wystawił ocenę 5/5 bez komentarza.</p>';
+        ? '<p class="review-card__text">' + esc(r.tresc) + '</p>'
+        : '<p class="review-card__text review-card__text--empty">Ocena 5/5 bez komentarza.</p>';
       return '' +
         '<article class="review-card">' +
-          '<div class="review-card__head">' +
-            '<div class="review-card__avatar">' + initials(r.autor) + '</div>' +
-            '<div>' +
-              '<div class="review-card__name">' + (r.autor || 'Klient') + '</div>' +
-              '<div class="review-card__meta">' + (r.zrodlo || 'Google') + ' · ' + (r.czas_publikacji || '') + '</div>' +
-            '</div>' +
-          '</div>' +
-          '<div class="review-card__stars" aria-label="Ocena 5 na 5">★★★★★</div>' +
+          '<div class="review-card__quote" aria-hidden="true">&#8220;</div>' +
           text +
+          '<div class="review-card__foot">' +
+            '<div class="review-card__avatar">' + esc(initials(r.autor)) + '</div>' +
+            '<div>' +
+              '<div class="review-card__name">' + esc(r.autor || 'Klient') + '</div>' +
+              '<div class="review-card__meta">' + esc(r.zrodlo || 'Google') + ' · ' + esc(r.czas_publikacji || '') + '</div>' +
+            '</div>' +
+            '<div class="review-card__stars" aria-label="Ocena 5 na 5">★★★★★</div>' +
+          '</div>' +
         '</article>';
     }).join('');
   }
