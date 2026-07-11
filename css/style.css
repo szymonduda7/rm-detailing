@@ -156,17 +156,8 @@ ul{list-style:none}
 /* ============ HERO ============ */
 .hero{
   position:relative;overflow:hidden;
-  background:
-    radial-gradient(130% 90% at 82% 4%, rgba(45,183,232,.12), transparent 55%),
-    linear-gradient(180deg,var(--ink) 0%,var(--bg) 70%);
+  background:linear-gradient(180deg,var(--ink) 0%,var(--bg) 70%);
   border-bottom:1px solid var(--line);
-}
-/* miękka poświata zamiast siatki */
-.hero__glow{
-  position:absolute;z-index:0;pointer-events:none;
-  width:560px;height:560px;right:-120px;top:-160px;
-  background:radial-gradient(circle,rgba(45,183,232,.22),transparent 66%);
-  filter:blur(20px);
 }
 .hero__grid{
   position:relative;z-index:2;
@@ -316,7 +307,10 @@ ul{list-style:none}
 }
 .step__num::before{counter-increment:step;content:"0" counter(step)}
 .step__line{height:1px;background:var(--line-2);margin:14px 0 16px;position:relative}
-.step__line::before{content:"";position:absolute;left:0;top:0;width:26px;height:1px;background:var(--blue)}
+.step__line::before{content:"";position:absolute;left:0;top:0;width:25%;height:1px;background:var(--blue)}
+.step:nth-child(2) .step__line::before{width:50%}
+.step:nth-child(3) .step__line::before{width:75%}
+.step:nth-child(4) .step__line::before{width:100%}
 .step__title{font-family:var(--font-display);font-weight:800;text-transform:uppercase;font-size:1.06rem;letter-spacing:-.01em}
 .step__text{color:var(--text-soft);font-size:.9rem;margin-top:8px}
 
