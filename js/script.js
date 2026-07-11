@@ -56,10 +56,8 @@
     });
   }
 
-  function renderReviews(list) {
-    var grid = document.getElementById('reviewsGrid');
-    if (!grid || !Array.isArray(list)) return;
-    grid.innerHTML = list.map(function (r) {
+  function reviewCardsHTML(list) {
+    return list.map(function (r) {
       var hasText = r.tresc && r.tresc.trim().length;
       var text = hasText
         ? '<p class="review-card__text">' + esc(r.tresc) + '</p>'
@@ -78,6 +76,14 @@
           '</div>' +
         '</article>';
     }).join('');
+  }
+
+  function renderReviews(list) {
+    var track = document.getElementById('reviewsGrid');
+    if (!track || !Array.isArray(list) || !list.length) return;
+    var html = reviewCardsHTML(list);
+    // duplikat karuzeli (aria-hidden) daje efekt nieskończonego przewijania
+    track.innerHTML = html + '<div class="reviews__track-dup" aria-hidden="true" style="display:contents">' + html + '</div>';
   }
 
   function loadReviews() {
